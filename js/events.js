@@ -1,0 +1,241 @@
+/**
+ * events.js — 10 educational Mars mission events grounded in NASA science.
+ */
+import { deepFreeze } from './utils.js';
+
+export const EVENTS = deepFreeze([
+  {
+    id: 'day-1-dust-storm',
+    category: 'weather',
+    title: 'Day 1: Approaching Dust Storm',
+    description: 'Orbital satellites spot a regional Martian dust storm rolling toward the outpost. Airborne dust will block sunlight and reduce solar panel output.',
+    sourceNote: 'NASA Mars Exploration Program (Atmospheric Dust Dynamics)',
+    commsDelayMinutes: 8,
+    choices: [
+      {
+        id: 'batteries',
+        label: 'Draw reserve battery power to keep the science lab running',
+        effects: { energy: -20, research: +15 },
+        previewText: 'Costs 20 Energy, gains 15 Research.',
+      },
+      {
+        id: 'conserve',
+        label: 'Dim habitat lights and pause lab equipment to save power',
+        effects: { energy: -5, research: +5 },
+        previewText: 'Costs only 5 Energy, gains 5 Research.',
+      },
+    ],
+    scienceLesson: 'Martian dust storms can cover entire regions for days. Because dust blocks sunlight, solar-powered missions like NASA’s InSight lander had to carefully ration battery energy whenever skies turned hazy.',
+  },
+  {
+    id: 'day-2-o2-scrubber',
+    category: 'life-support',
+    title: 'Day 2: Oxygen Scrubber Filter Alert',
+    description: 'Fine electrostatic Martian dust (regolith) has entered the airlock and partially clogged the primary MOXIE-style oxygen generator.',
+    sourceNote: 'NASA Perseverance MOXIE Oxygen In-Situ Resource Experiment',
+    commsDelayMinutes: 9,
+    choices: [
+      {
+        id: 'auto-flush',
+        label: 'Run a high-voltage thermal self-cleaning cycle',
+        effects: { oxygen: +15, energy: -18 },
+        previewText: 'Boosts Oxygen (+15), costs Energy (-18).',
+      },
+      {
+        id: 'manual-clean',
+        label: 'Have astronauts disassemble and brush the filters by hand',
+        effects: { oxygen: +12, water: -8, crewHealth: -5 },
+        previewText: 'Boosts Oxygen (+12), uses wash Water (-8) and tires crew (-5).',
+      },
+    ],
+    scienceLesson: 'On Mars, NASA’s MOXIE experiment proved we can pull breathable oxygen from carbon dioxide in the thin Martian air—but keeping filters clean from sticky Martian dust requires energy and crew maintenance.',
+  },
+  {
+    id: 'day-3-greenhouse',
+    category: 'food',
+    title: 'Day 3: Hydroponic Greenhouse Harvest',
+    description: 'Your dwarf wheat and leafy greens in the inflatable greenhouse are ready for a growth boost. Investing water and LED grow-light power now will yield fresh food.',
+    sourceNote: 'NASA Open Science Data Repository (OSDR Veggie / Plant Habitat studies)',
+    commsDelayMinutes: 11,
+    choices: [
+      {
+        id: 'full-harvest',
+        label: 'Pump extra water and full-spectrum LED light to harvest crops',
+        effects: { food: +25, water: -15, energy: -12 },
+        unlocksObjective: 'foodGrown',
+        previewText: 'Completes Food Goal! Gains +25 Food, costs 15 Water & 12 Energy.',
+      },
+      {
+        id: 'ration-water',
+        label: 'Keep plants on minimal water to save drinking reserves',
+        effects: { food: +6, water: -4 },
+        previewText: 'Small harvest (+6 Food) while saving Water (-4).',
+      },
+    ],
+    scienceLesson: 'Space biology experiments in NASA’s Open Science Data Repository (OSDR) show that growing fresh salad crops under red and blue LED lights provides astronauts with vital nutrients and boosts crew morale.',
+  },
+  {
+    id: 'day-4-radiation-donki',
+    category: 'radiation',
+    title: 'Day 4: DONKI Space-Weather Alert',
+    description: 'Space-weather monitors detect an M-class solar flare and Coronal Mass Ejection (CME). Surface radiation risk depends on our shielding and shelter protocols.',
+    sourceNote: 'NASA CCMC DONKI (Space Weather Database Of Notifications, Knowledge, Information)',
+    commsDelayMinutes: 12,
+    choices: [
+      {
+        id: 'water-wall-shield',
+        label: 'Pump water into the habitat’s outer storm-shelter walls & boost shielding',
+        effects: { shielding: +20, energy: -15, water: -8 },
+        previewText: 'Strong protection (+20 Shielding), costs 15 Energy & 8 Water.',
+      },
+      {
+        id: 'shelter-in-place',
+        label: 'Halt outdoor EVA work and shelter in the central bunk module',
+        effects: { shielding: +8, research: -5, crewHealth: +5 },
+        previewText: 'Modest protection (+8 Shielding, +5 Health), pauses Research (-5).',
+      },
+    ],
+    scienceLesson: 'Unlike Earth, Mars lacks a global magnetic field and thick atmosphere. A solar flare record does not automatically equal a fixed surface dose—actual risk depends on event angle, Martian atmosphere, and habitat shielding.',
+  },
+  {
+    id: 'day-5-water-recycler',
+    category: 'water',
+    title: 'Day 5: Water Recovery Loop Leak',
+    description: 'A valve in the greywater recycling unit is losing pressure. On Mars, nearly every drop of moisture from air and wash water must be reclaimed.',
+    sourceNote: 'NASA Environmental Control and Life Support System (ECLSS)',
+    commsDelayMinutes: 14,
+    choices: [
+      {
+        id: 'replace-valve',
+        label: 'Power down the lab to weld and pressurize a replacement valve',
+        effects: { water: +20, energy: -14 },
+        previewText: 'Recovers +20 Water, costs 14 Energy.',
+      },
+      {
+        id: 'patch-seal',
+        label: 'Apply a quick sealant patch and run a geology experiment instead',
+        effects: { water: +6, research: +15, energy: -8 },
+        previewText: 'Recovers +6 Water and +15 Research, costs 8 Energy.',
+      },
+    ],
+    scienceLesson: 'On the International Space Station, NASA’s life-support systems recycle over 90% of all water. Because launching heavy water from Earth is terribly expensive, closed-loop water recycling is essential for Mars.',
+  },
+  {
+    id: 'day-6-comms-delay',
+    category: 'comms',
+    title: 'Day 6: Deep-Space Communication Delay',
+    description: 'Mars and Earth are moving farther apart in their orbits. One-way radio signals now take 16 minutes—a 32-minute round trip! Mission Control is waiting for our high-resolution telemetry packet.',
+    sourceNote: 'NASA Deep Space Network (Mars–Earth Light-Time Geometry)',
+    commsDelayMinutes: 16,
+    choices: [
+      {
+        id: 'high-gain-transmit',
+        label: 'Power up the high-gain dish to transmit full mission report to Earth',
+        effects: { energy: -16, research: +10 },
+        unlocksObjective: 'reportSent',
+        previewText: 'Completes Earth Report Goal! Costs 16 Energy, gains +10 Research.',
+      },
+      {
+        id: 'low-power-beacon',
+        label: 'Send only a short status ping and save energy for life support',
+        effects: { energy: -4, oxygen: +8 },
+        previewText: 'Saves power (-4 Energy) and boosts Oxygen (+8), but skips full report.',
+      },
+    ],
+    scienceLesson: 'Radio waves travel at the speed of light. Depending on where Earth and Mars are in their orbits, a one-way message takes between 4 and 22 minutes—meaning Mars astronauts must solve urgent problems on their own!',
+  },
+  {
+    id: 'day-7-rover-expedition',
+    category: 'research',
+    title: 'Day 7: Ancient Lakebed Rover Survey',
+    description: 'Your pressurized rover can drive to a nearby clay-rich crater rim that may hold chemical signs of ancient Martian water.',
+    sourceNote: 'NASA Curiosity & Perseverance Astrobiology Missions',
+    commsDelayMinutes: 17,
+    choices: [
+      {
+        id: 'full-drill',
+        label: 'Drive the rover out and run the laser spectrometer and core drill',
+        effects: { research: +25, energy: -18, oxygen: -6 },
+        previewText: 'Major science boost (+25 Research), costs 18 Energy & 6 Oxygen.',
+      },
+      {
+        id: 'drone-scout',
+        label: 'Fly a lightweight rotorcraft scout over the rim instead',
+        effects: { research: +12, energy: -8 },
+        previewText: 'Moderate science (+12 Research) for low cost (-8 Energy).',
+      },
+    ],
+    scienceLesson: 'NASA’s Perseverance rover and Ingenuity helicopter worked together in Jezero Crater—an ancient lakebed—to study water-formed minerals and collect rock cores.',
+  },
+  {
+    id: 'day-8-solar-cleaning',
+    category: 'weather',
+    title: 'Day 8: Dust-Coated Solar Arrays',
+    description: 'Fine red dust from earlier winds has settled on the outpost’s solar wings, cutting daily electricity generation.',
+    sourceNote: 'NASA Mars Surface Power Systems',
+    commsDelayMinutes: 19,
+    choices: [
+      {
+        id: 'eva-sweep',
+        label: 'Send two astronauts in spacesuits to sweep the solar arrays clean',
+        effects: { energy: +28, oxygen: -10, food: -5 },
+        previewText: 'Restores +28 Energy, uses suit Oxygen (-10) and extra Food (-5).',
+      },
+      {
+        id: 'electrostatic-pulse',
+        label: 'Use built-in electrostatic dust-repellent strips (partial clean)',
+        effects: { energy: +14, shielding: -4 },
+        previewText: 'Gains +14 Energy with no EVA suit oxygen cost.',
+      },
+    ],
+    scienceLesson: 'Dust buildup on solar panels is one of the biggest power challenges on Mars. Engineers test electrostatic dust-repellent coatings and mechanical wipers so future crews can keep power flowing.',
+  },
+  {
+    id: 'day-9-night-freeze',
+    category: 'life-support',
+    title: 'Day 9: Extreme Martian Night Freeze',
+    description: 'Nighttime temperatures outside the habitat have plunged to -90°C (-130°F). Habitat heaters need extra power to keep the crew and greenhouse warm.',
+    sourceNote: 'NASA Mars Environmental Dynamics Analyzer (MEDA)',
+    commsDelayMinutes: 20,
+    choices: [
+      {
+        id: 'boost-heaters',
+        label: 'Run habitat and greenhouse thermal loops at full capacity',
+        effects: { energy: -18, food: +12, crewHealth: +8 },
+        unlocksObjective: 'foodGrown',
+        previewText: 'Keeps plants & crew thriving (+12 Food, +8 Health), costs 18 Energy.',
+      },
+      {
+        id: 'zone-heating',
+        label: 'Heat only the crew quarters and insulate the rest of the dome',
+        effects: { energy: -6, food: -4, shielding: +6 },
+        previewText: 'Saves Energy (-6) and adds insulation (+6 Shielding), loses 4 Food.',
+      },
+    ],
+    scienceLesson: 'Because Mars is farther from the Sun and has an atmosphere 100 times thinner than Earth’s, heat escapes quickly into space at night, causing huge daily temperature swings.',
+  },
+  {
+    id: 'day-10-final-prep',
+    category: 'comms',
+    title: 'Day 10: Final Mission Wrap-Up & Uplink',
+    description: 'It is the final day of your 10-day shift! Before the relief crew takes over, you can transmit your final research archive to Earth or reinforce life-support reserves.',
+    sourceNote: 'NASA Human Research Program & Mission Operations',
+    commsDelayMinutes: 21,
+    choices: [
+      {
+        id: 'final-uplink',
+        label: 'Transmit complete scientific archive & bio-samples summary to Earth',
+        effects: { research: +20, energy: -15, oxygen: +5 },
+        unlocksObjective: 'reportSent',
+        previewText: 'Completes Earth Report Goal & adds +20 Research! Costs 15 Energy.',
+      },
+      {
+        id: 'life-support-topup',
+        label: 'Run all life-support recyclers at maximum for crew safety',
+        effects: { oxygen: +18, water: +15, food: +10, energy: -12 },
+        previewText: 'Boosts Oxygen (+18), Water (+15), and Food (+10) for -12 Energy.',
+      },
+    ],
+    scienceLesson: 'Successful space missions never maximize just one number—commanders balance crew health, life-support reserves, and scientific discovery so everyone finishes the mission safely.',
+  },
+]);
