@@ -1,7 +1,0 @@
-{
-  "name": "mars-outpost-survival",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "description": "A 2D educational Mars outpost management game. The \"type: module\" line lets the same game-logic files run in the browser and (later) in the Node balance simulator."
-}
