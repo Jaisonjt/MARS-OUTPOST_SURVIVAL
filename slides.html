@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MARS: OUTPOST SURVIVAL — 7-Slide Presentation</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪐</text></svg>">
+  <style>
+    :root {
+      --navy: #0b1026;
+      --navy-card: #141c3a;
+      --navy-deep: #070b1a;
+      --rust: #b7410e;
+      --orange: #ff7a3d;
+      --sand: #f2d2a9;
+      --text: #f7efe6;
+      --text-dim: #c7bca9;
+      --ok: #8be3a0;
+      --warn: #ffd166;
+      --danger: #ff8f8f;
+      --border: rgba(242, 210, 169, 0.24);
+      --font: "Trebuchet MS", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at 80% 15%, #1e1638 0%, var(--navy) 55%, var(--navy-deep) 100%);
+      color: var(--text);
+      font-family: var(--font);
+    }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 1.5rem;
+      background: rgba(7, 11, 26, 0.85);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .topbar-brand {
+      color: var(--sand);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .topbar-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    /* Main stage */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+
+    .slide {
+      display: none;
+      width: min(72rem, 100%);
+      min-height: 39rem;
+      background: rgba(20, 28, 58, 0.92);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 2.2rem 2.6rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+      position: relative;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.28s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Typography */
+    .eyebrow-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .eyebrow {
+      color: var(--orange);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .tech-pill {
+      background: rgba(255, 122, 61, 0.16);
+      border: 1px solid var(--orange);
+      color: var(--sand);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      line-height: 1.08;
+      margin: 0.2rem 0 0.4rem;
+      color: var(--text);
+      text-shadow: 0 3px 0 var(--rust);
+    }
+    h2 {
+      font-size: clamp(1.55rem, 2.6vw, 2.15rem);
+      color: var(--sand);
+      margin: 0 0 1rem;
+    }
+    h3 {
+      font-size: 1.1rem;
+      color: var(--sand);
+      margin: 0 0 0.35rem;
+    }
+    p {
+      margin: 0 0 0.75rem;
+      line-height: 1.5;
+      color: var(--text-dim);
+    }
+    .tagline {
+      font-size: 1.3rem;
+      color: var(--sand);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Grids & Cards */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.6rem;
+      align-items: center;
+      margin: 0.5rem 0 1.2rem;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.85rem;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+    }
+    .card {
+      background: rgba(11, 16, 38, 0.78);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.15rem;
+    }
+    .card--highlight {
+      background: linear-gradient(145deg, rgba(183, 65, 14, 0.28), rgba(11, 16, 38, 0.9));
+      border-color: var(--orange);
+    }
+    .big-stat {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.35rem;
+      display: inline-block;
+    }
+    .rate-badge {
+      display: inline-block;
+      margin-top: 0.35rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .rate-down { background: rgba(255, 143, 143, 0.16); color: var(--danger); }
+    .rate-up   { background: rgba(139, 227, 160, 0.16); color: var(--ok); }
+    .rate-evt  { background: rgba(255, 209, 102, 0.16); color: var(--warn); }
+
+    /* Step circle badge */
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 1.9rem;
+      height: 1.9rem;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #1a0f08;
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .data-table th, .data-table td {
+      padding: 0.65rem 0.85rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table th {
+      background: rgba(255, 122, 61, 0.15);
+      color: var(--sand);
+      font-weight: 700;
+    }
+    .data-table td { color: var(--text); }
+
+    /* Code blocks */
+    pre {
+      margin: 0.5rem 0 0;
+      padding: 0.85rem 1rem;
+      background: #070a18;
+      border: 1px solid rgba(242, 210, 169, 0.2);
+      border-radius: 10px;
+      color: #a9dc76;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.84rem;
+      line-height: 1.42;
+      overflow-x: auto;
+    }
+
+    /* Outpost SVG box */
+    .outpost-art {
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      display: block;
+    }
+
+    /* Buttons & Footer Nav */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn--primary {
+      background: var(--orange);
+      color: #1a0f08;
+      border-color: #ffb48a;
+    }
+    .btn--secondary {
+      background: var(--navy-card);
+      color: var(--sand);
+      border-color: var(--sand);
+    }
+    .btn--secondary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.75rem;
+      background: rgba(7, 11, 26, 0.9);
+      border-top: 1px solid var(--border);
+    }
+    .dots {
+      display: flex;
+      gap: 0.45rem;
+      align-items: center;
+    }
+    .dot {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .dot.active {
+      background: var(--orange);
+      color: #1a0f08;
+      border-color: #ffb48a;
+    }
+
+    @media (max-width: 60rem) {
+      .hero-split, .grid-5, .grid-4, .grid-3, .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .slide { min-height: auto; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Utility Header -->
+  <header class="topbar">
+    <div class="topbar-brand">🪐 MARS: OUTPOST SURVIVAL • Official Presentation Deck</div>
+    <div class="topbar-actions">
+      <a class="btn btn--primary" href="index.html">🚀 Launch Live Game</a>
+    </div>
+  </header>
+
+  <main class="stage">
+
+    <!-- ================= SLIDE 1 ================= -->
+    <section class="slide active" aria-label="Slide 1">
+      <div>
+        <div class="eyebrow-row">
+          <p class="eyebrow">NASA SPACE APPS CHALLENGE • TEAM SPACE RAPTORS</p>
+          <span class="tech-pill">HTML5 • CSS3 • Vanilla ES6 JS</span>
+        </div>
+
+        <div class="hero-split">
+          <div>
+            <h1>MARS:<br>OUTPOST SURVIVAL</h1>
+            <p class="tagline">Your mission. Your decisions. Their survival.</p>
+            <p style="font-size: 1.08rem; color: var(--text);">
+              An interactive 2D educational resource-management simulation for ages 7–12.
+              Players command a 4-astronaut Mars habitat across a 10-day mission to experience
+              real aerospace engineering trade-offs.
+            </p>
+            <div style="margin-top: 1.1rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <a class="btn btn--primary" href="index.html">🎮 Play Live Demo</a>
+              <a class="btn btn--secondary" href="https://github.com/Jaisonjt/MARS-OUTPOST_SURVIVAL" target="_blank" rel="noopener">💻 GitHub Code</a>
+            </div>
+          </div>
+
+          <!-- Mars Outpost SVG Illustration from PPTX -->
+          <div>
+            <svg class="outpost-art" viewBox="0 0 420 290" role="img" aria-label="Mars outpost illustration">
+              <rect width="420" height="290" fill="#121c3d"/>
+              <circle cx="325" cy="70" r="36" fill="#46475e"/>
+              <circle cx="325" cy="70" r="20" fill="#fce4b8"/>
+              <path d="M0 195 Q110 165 220 188 T420 175 L420 290 L0 290 Z" fill="#8b3311"/>
+              <path d="M0 220 Q150 200 280 218 T420 215 L420 290 L0 290 Z" fill="#b84212"/>
+              <!-- Solar Panel -->
+              <line x1="73" y1="200" x2="73" y2="225" stroke="#8f99ad" stroke-width="5"/>
+              <polygon points="42,188 96,178 106,200 52,210" fill="#23408f" stroke="#a9b8e8" stroke-width="2.5"/>
+              <!-- Habitat Dome -->
+              <path d="M135 225 A65 65 0 0 1 265 225 Z" fill="#dfe5f0" stroke="#8f99ad" stroke-width="3"/>
+              <circle cx="200" cy="190" r="10" fill="#ffd98a" stroke="#8f99ad" stroke-width="2.5"/>
+              <rect x="188" y="206" width="24" height="19" rx="3" fill="#9aa3b8"/>
+              <!-- Greenhouse Dome -->
+              <path d="M280 225 A45 42 0 0 1 370 225 Z" fill="#6b825e" fill-opacity="0.75" stroke="#d9f7e3" stroke-width="3"/>
+              <circle cx="312" cy="213" r="7" fill="#32b864"/>
+              <circle cx="338" cy="213" r="7" fill="#32b864"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="card-icon">🧒</span>
+          <h3>TARGET AUDIENCE</h3>
+          <p style="margin:0; color:var(--text);">Children Aged 7–12</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">📅</span>
+          <h3>MISSION SCOPE</h3>
+          <p style="margin:0; color:var(--text);">10 Simulated Sols • 5 Core Resources</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🌍</span>
+          <h3>SCIENTIFIC GROUNDING</h3>
+          <p style="margin:0; color:var(--text);">NASA DONKI, OSDR &amp; Mars Program</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SLIDE 2 ================= -->
+    <section class="slide" aria-label="Slide 2">
+      <div>
+        <p class="eyebrow">01 / MISSION INTRODUCTION &amp; EDUCATIONAL PURPOSE</p>
+        <h2>Teaching Engineering Trade-Offs Through Play</h2>
+
+        <div class="hero-split" style="align-items: stretch;">
+          <div class="card card--highlight" style="display:flex; flex-direction:column; justify-content:center;">
+            <div class="big-stat">10 Days</div>
+            <h3 style="font-size:1.3rem; margin-bottom:0.8rem;">4 Astronauts • 1 Red Planet Outpost</h3>
+            <p style="color:var(--text); font-size:1.05rem; margin:0;">
+              Players step into the role of Mars Outpost Commander. Every decision teaches that
+              no engineering action is free—boosting one system consumes resources needed by another.
+            </p>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom:0.75rem;">Core Educational Objectives</h3>
+            <div class="grid-2">
+              <div class="card">
+                <span class="card-icon">⚖️</span>
+                <h3>Resource Scarcity</h3>
+                <p style="margin:0;">Balance finite air, power, food, water, and shielding.</p>
+              </div>
+              <div class="card">
+                <span class="card-icon">🔗</span>
+                <h3>System Interdependence</h3>
+                <p style="margin:0;">Powering life support reduces energy for science.</p>
+              </div>
+              <div class="card">
+                <span class="card-icon">📡</span>
+                <h3>Comms Delay Autonomy</h3>
+                <p style="margin:0;">8–21 minute one-way delays require local decisions.</p>
+              </div>
+              <div class="card">
+                <span class="card-icon">🎓</span>
+                <h3>Supportive Debriefs</h3>
+                <p style="margin:0;">Safe crew evacuation explains the science of failure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="margin:0; font-size:0.85rem; text-align:right;">Slide 2 of 7</p>
+    </section>
+
+    <!-- ================= SLIDE 3 ================= -->
+    <section class="slide" aria-label="Slide 3">
+      <div>
+        <p class="eyebrow">02 / RESOURCE MANAGEMENT SYSTEM</p>
+        <h2>Five Interdependent Resources &amp; Daily Rates</h2>
+
+        <div class="grid-5" style="margin-bottom: 1.2rem;">
+          <div class="card" style="text-align:center;">
+            <span class="card-icon">💨</span>
+            <h3>Oxygen</h3>
+            <p style="margin:0;">Start 80/100</p>
+            <span class="rate-badge rate-down">-6/day</span>
+          </div>
+          <div class="card" style="text-align:center;">
+            <span class="card-icon">⚡</span>
+            <h3>Energy</h3>
+            <p style="margin:0;">Start 70/100</p>
+            <span class="rate-badge rate-up">+4/day</span>
+          </div>
+          <div class="card" style="text-align:center;">
+            <span class="card-icon">🌱</span>
+            <h3>Food</h3>
+            <p style="margin:0;">Start 70/100</p>
+            <span class="rate-badge rate-down">-6/day</span>
+          </div>
+          <div class="card" style="text-align:center;">
+            <span class="card-icon">💧</span>
+            <h3>Water</h3>
+            <p style="margin:0;">Start 70/100</p>
+            <span class="rate-badge rate-down">-6/day</span>
+          </div>
+          <div class="card" style="text-align:center;">
+            <span class="card-icon">🛡️</span>
+            <h3>Shielding</h3>
+            <p style="margin:0;">Start 60/100</p>
+            <span class="rate-badge rate-evt">Event-driven</span>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <span class="card-icon">⚠️</span>
+            <h3 style="color:var(--warn);">Low Threshold (&lt; 20)</h3>
+            <p style="margin:0; color:var(--text);">Triggers visual stripe + icon alert so players never rely on color alone.</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">💔</span>
+            <h3 style="color:var(--danger);">Depletion Penalty (= 0)</h3>
+            <p style="margin:0; color:var(--text);">Inflicts -20 Crew Health per empty life-support meter.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin:0; font-size:0.85rem; text-align:right;">Slide 3 of 7</p>
+    </section>
+
+    <!-- ================= SLIDE 4 ================= -->
+    <section class="slide" aria-label="Slide 4">
+      <div>
+        <p class="eyebrow">03 / DAILY GAMEPLAY LOOP &amp; WIN CONDITIONS</p>
+        <h2>Daily Decision Cycle &amp; Multi-Strategy Objectives</h2>
+
+        <div class="grid-5" style="margin-bottom: 1.2rem;">
+          <div class="card">
+            <div class="step-num">1</div>
+            <p class="eyebrow" style="font-size:0.72rem;">STEP 01</p>
+            <h3>Daily Rates</h3>
+            <p style="margin:0; font-size:0.9rem;">Apply life-support decay.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">2</div>
+            <p class="eyebrow" style="font-size:0.72rem;">STEP 02</p>
+            <h3>Mars Event</h3>
+            <p style="margin:0; font-size:0.9rem;">Present daily scenario.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">3</div>
+            <p class="eyebrow" style="font-size:0.72rem;">STEP 03</p>
+            <h3>Ghost Preview</h3>
+            <p style="margin:0; font-size:0.9rem;">Hover to inspect costs.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">4</div>
+            <p class="eyebrow" style="font-size:0.72rem;">STEP 04</p>
+            <h3>Delta Update</h3>
+            <p style="margin:0; font-size:0.9rem;">Animate resource changes.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">5</div>
+            <p class="eyebrow" style="font-size:0.72rem;">STEP 05</p>
+            <h3>NASA Lesson</h3>
+            <p style="margin:0; font-size:0.9rem;">Explain real-world science.</p>
+          </div>
+        </div>
+
+        <div class="card card--highlight" style="margin-bottom: 0.9rem; padding: 0.7rem 1.1rem;">
+          <strong>VICTORY CRITERIA:</strong> Survive 10 Days + Complete Any 2 of 3 Objectives
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <span class="card-icon">🔬</span>
+            <h3>1. Mars Research</h3>
+            <p style="margin:0;">Reach 40+ science points.</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">🌱</span>
+            <h3>2. Greenhouse Crop</h3>
+            <p style="margin:0;">Harvest hydroponic food.</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">📡</span>
+            <h3>3. Earth Telemetry</h3>
+            <p style="margin:0;">Transmit high-gain report.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin:0; font-size:0.85rem; text-align:right;">Slide 4 of 7</p>
+    </section>
+
+    <!-- ================= SLIDE 5 ================= -->
+    <section class="slide" aria-label="Slide 5">
+      <div>
+        <p class="eyebrow">04 / NASA OPEN DATA &amp; SCIENTIFIC INTEGRITY</p>
+        <h2>Authoritative NASA Datasets &amp; Four-Tier Transparency</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>NASA Source</th>
+              <th>Mission Scenario</th>
+              <th>Scientific Principle Taught</th>
+              <th>Data Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CCMC DONKI</strong></td>
+              <td>Day 4 Radiation Alert</td>
+              <td>Surface dose depends on shielding</td>
+              <td>Live API + Fallback</td>
+            </tr>
+            <tr>
+              <td><strong>NASA OSDR</strong></td>
+              <td>Day 3 Hydroponic Crop</td>
+              <td>LED light &amp; water drive Veggie growth</td>
+              <td>Published Research</td>
+            </tr>
+            <tr>
+              <td><strong>MOXIE &amp; MEDA</strong></td>
+              <td>Days 1, 2, 8, 9 Weather</td>
+              <td>Dust solar loss &amp; CO₂ O₂ extraction</td>
+              <td>Mission Telemetry</td>
+            </tr>
+            <tr>
+              <td><strong>Deep Space Net</strong></td>
+              <td>Day 6 Uplink Delay</td>
+              <td>8–21 min orbital light-time delay</td>
+              <td>Derived Calculation</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p style="font-weight:700; color:var(--sand); margin-bottom:0.5rem;">
+          SCIENTIFIC HONESTY GUARANTEE — Every claim is clearly labeled as one of four tiers:
+        </p>
+        <div class="grid-4">
+          <div class="card"><span class="step-num">1</span><h3>Real NASA Data</h3></div>
+          <div class="card"><span class="step-num">2</span><h3>Derived Orbital Math</h3></div>
+          <div class="card"><span class="step-num">3</span><h3>Simplified Gameplay Assumptions</h3></div>
+          <div class="card"><span class="step-num">4</span><h3>Fictional Story Events</h3></div>
+        </div>
+      </div>
+      <p style="margin:0; font-size:0.85rem; text-align:right;">Slide 5 of 7</p>
+    </section>
+
+    <!-- ================= SLIDE 6 ================= -->
+    <section class="slide" aria-label="Slide 6">
+      <div>
+        <p class="eyebrow">05 / TECHNICAL ARCHITECTURE &amp; CODE HIGHLIGHTS</p>
+        <h2>Pure-Function Core &amp; Resilient UI Engineering</h2>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="eyebrow-row">
+              <h3>Immutable Pure-Function Reducer</h3>
+              <span class="tech-pill">gameState.js</span>
+            </div>
+            <p style="font-size:0.92rem;">Decouples math from DOM rendering and clamps meters between 0 and 100.</p>
+<pre><code>case ACTIONS.MAKE_DECISION: {
+  const choice = eventObj.choices.find(
+    (c) => c.id === action.choiceId
+  );
+  const updated = applyEffects(
+    state.game, choice.effects
+  );
+  return deepFreeze({ ...state,
+    game: { ...updated,
+      currentEvent: null } });
+}</code></pre>
+          </div>
+
+          <div class="card">
+            <div class="eyebrow-row">
+              <h3>GPU Ghost Bars &amp; DONKI Fallback</h3>
+              <span class="tech-pill">ui.js</span>
+            </div>
+            <p style="font-size:0.92rem;">Previews trade-offs via scaleX() and handles offline API drops gracefully.</p>
+<pre><code>// GPU-accelerated trade-off preview
+meter.ghost.style.transform =
+  `scaleX(${next / meter.info.max})`;
+
+// Resilient NASA DONKI API fetch
+try {
+  const res = await fetch(DONKI_URL);
+  const data = await res.json();
+} catch (err) {
+  useCuratedNasaArchiveFallback();
+}</code></pre>
+          </div>
+        </div>
+      </div>
+      <p style="margin:0; font-size:0.85rem; text-align:right;">Slide 6 of 7</p>
+    </section>
+
+    <!-- ================= SLIDE 7 ================= -->
+    <section class="slide" aria-label="Slide 7">
+      <div>
+        <p class="eyebrow">MISSION READY • NASA SPACE APPS CHALLENGE</p>
+
+        <div class="hero-split">
+          <div>
+            <h1>Ready for Command<br>on the Red Planet</h1>
+            <p style="font-size:1.1rem; color:var(--text);">
+              100% playable offline in any desktop browser with live NASA DONKI verification,
+              reactive SVG weather, and accessible keyboard controls.
+            </p>
+            <div style="margin-top: 1.2rem; display: flex; gap: 0.8rem; flex-wrap: wrap;">
+              <a class="btn btn--primary" href="index.html">🚀 Launch Playable Mission</a>
+              <a class="btn btn--secondary" href="https://github.com/Jaisonjt/MARS-OUTPOST_SURVIVAL" target="_blank" rel="noopener">📂 View Source Repository</a>
+            </div>
+          </div>
+
+          <div>
+            <svg class="outpost-art" viewBox="0 0 420 290" role="img" aria-label="Mars outpost illustration">
+              <rect width="420" height="290" fill="#121c3d"/>
+              <circle cx="325" cy="70" r="36" fill="#46475e"/>
+              <circle cx="325" cy="70" r="20" fill="#fce4b8"/>
+              <path d="M0 195 Q110 165 220 188 T420 175 L420 290 L0 290 Z" fill="#8b3311"/>
+              <path d="M0 220 Q150 200 280 218 T420 215 L420 290 L0 290 Z" fill="#b84212"/>
+              <line x1="73" y1="200" x2="73" y2="225" stroke="#8f99ad" stroke-width="5"/>
+              <polygon points="42,188 96,178 106,200 52,210" fill="#23408f" stroke="#a9b8e8" stroke-width="2.5"/>
+              <path d="M135 225 A65 65 0 0 1 265 225 Z" fill="#dfe5f0" stroke="#8f99ad" stroke-width="3"/>
+              <circle cx="200" cy="190" r="10" fill="#ffd98a" stroke="#8f99ad" stroke-width="2.5"/>
+              <rect x="188" y="206" width="24" height="19" rx="3" fill="#9aa3b8"/>
+              <path d="M280 225 A45 42 0 0 1 370 225 Z" fill="#6b825e" fill-opacity="0.75" stroke="#d9f7e3" stroke-width="3"/>
+              <circle cx="312" cy="213" r="7" fill="#32b864"/>
+              <circle cx="338" cy="213" r="7" fill="#32b864"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" style="display:flex; align-items:center; gap:0.75rem;">
+          <span style="font-size:1.5rem; color:var(--ok);">✔</span>
+          <h3 style="margin:0;">10-Day Playable Loop</h3>
+        </div>
+        <div class="card" style="display:flex; align-items:center; gap:0.75rem;">
+          <span style="font-size:1.5rem; color:var(--ok);">✔</span>
+          <h3 style="margin:0;">Ghost-Bar Previews</h3>
+        </div>
+        <div class="card" style="display:flex; align-items:center; gap:0.75rem;">
+          <span style="font-size:1.5rem; color:var(--ok);">✔</span>
+          <h3 style="margin:0;">NASA Data Attribution</h3>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Slide Controls -->
+  <footer class="footer-nav">
+    <button type="button" class="btn btn--secondary" id="prevBtn" onclick="goSlide(current - 1)">← Previous</button>
+    <div class="dots" id="dots"></div>
+    <button type="button" class="btn btn--secondary" id="nextBtn" onclick="goSlide(current + 1)">Next →</button>
+  </footer>
+
+  <script>
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsHost = document.getElementById('dots');
+
+    slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'dot';
+      b.textContent = i + 1;
+      b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      b.onclick = () => goSlide(i);
+      dotsHost.appendChild(b);
+    });
+
+    function goSlide(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      [...dotsHost.children].forEach((d, i) => d.classList.toggle('active', i === current));
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') goSlide(current + 1);
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') goSlide(current - 1);
+    });
+
+    goSlide(0);
+  </script>
+</body>
+</html>
